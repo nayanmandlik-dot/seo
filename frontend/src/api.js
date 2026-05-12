@@ -6,11 +6,25 @@ const BASE = `${import.meta.env.VITE_API_URL || ''}/api`;
 export const API_BASE = BASE;
 
 async function http(path, init) {
-  const res = await fetch(BASE + path, {
-    headers: { 'Content-Type': 'application/json' },
-    ...init,
-  });
-  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  let res;
+  try {
+    res = await fetch(BASE + path, {
+      headers: { 'Content-Type': 'application/json' },
+      ...init,
+    });
+  } catch (e) {
+    throw new Error(`Network error: ${e.message}. Backend may be unreachable.`);
+  }
+  if (!res.ok) {
+    // Try to surface the backend's JSON error message ({"error": "..."})
+    // instead of a bare status code.
+    let detail = res.statusText;
+    try {
+      const body = await res.clone().json();
+      if (body?.error) detail = body.error;
+    } catch { /* not JSON, keep statusText */ }
+    throw new Error(`${res.status} — ${detail}`);
+  }
   return res.json();
 }
 

@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import { api } from '../../api.js';
 
+// downloadUrl from the backend is relative ("/api/exports/foo.pdf"). On Pages
+// (cross-origin) it must be prefixed with the backend origin so the browser
+// downloads from Render, not from github.io.
+const API_ORIGIN = import.meta.env.VITE_API_URL || '';
+const resolveDownloadUrl = (rel) => (rel?.startsWith('http') ? rel : API_ORIGIN + rel);
+
 export default function Export({ report }) {
   const [busy, setBusy] = useState(null);
   const [last, setLast] = useState(null);
+  const [error, setError] = useState(null);
 
   async function go(type) {
     setBusy(type);
+    setError(null);
     try {
       let r;
       if (type === 'pdf-full') r = await api.exportPdf(report.sessionId, false);
       else if (type === 'pdf-exec') r = await api.exportPdf(report.sessionId, true);
       else if (type === 'csv') r = await api.exportCsv(report.sessionId);
       else if (type === 'json') r = await api.exportJson(report.sessionId);
-      setLast(r);
-    } catch (e) { alert('Export failed: ' + e.message); }
+      setLast({ ...r, downloadUrl: resolveDownloadUrl(r.downloadUrl) });
+    } catch (e) { setError(e.message); }
     finally { setBusy(null); }
   }
 
@@ -41,9 +49,10 @@ export default function Export({ report }) {
         </button>
       </div>
       {busy && <div className="mt-4 text-sm text-gray-500">Generating {busy}…</div>}
+      {error && <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-800 rounded text-sm">Export failed: {error}</div>}
       {last && (
         <div className="mt-4 text-sm">
-          <a href={last.downloadUrl} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">Download {last.filename}</a>
+          <a href={last.downloadUrl} target="_blank" rel="noreferrer" download={last.filename} className="text-blue-600 hover:underline">Download {last.filename}</a>
         </div>
       )}
     </div>
