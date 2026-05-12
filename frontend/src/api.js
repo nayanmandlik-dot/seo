@@ -1,7 +1,8 @@
-// In dev, Vite's proxy forwards /api to the local backend (see vite.config.js).
-// In production (Vercel), set VITE_API_BASE to the deployed backend URL,
-// e.g. https://seo-audit-backend.onrender.com/api
-const BASE = import.meta.env.VITE_API_BASE || '/api';
+// Production: VITE_API_URL points at the Render backend root,
+//   e.g. https://seo-p307.onrender.com  → BASE becomes ${VITE_API_URL}/api
+// Local dev: VITE_API_URL is unset, BASE falls back to "/api" which Vite's
+//   proxy forwards to http://localhost:4000 (see vite.config.js).
+const BASE = `${import.meta.env.VITE_API_URL || ''}/api`;
 export const API_BASE = BASE;
 
 async function http(path, init) {
