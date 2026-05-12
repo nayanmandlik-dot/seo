@@ -24,6 +24,10 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 
+app.get('/', (_req, res) => {
+  res.send('Backend is running successfully 🚀');
+});
+
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.get('/api/events/:sessionId', sseHandler);
 app.use('/api', routes);
