@@ -1,0 +1,902 @@
+{
+  "sessionId": "a4cf7ee7-d00c-4d0b-b91f-dca7a29dd0aa",
+  "rootUrl": "https://example.com",
+  "config": {
+    "sessionId": "a4cf7ee7-d00c-4d0b-b91f-dca7a29dd0aa",
+    "rootUrl": "https://example.com",
+    "maxPages": null,
+    "crawlSpeed": "normal",
+    "includePatterns": [],
+    "excludePatterns": [],
+    "userAgent": "chrome",
+    "crawlSubdomains": false,
+    "respectRobots": true,
+    "maxDepth": null,
+    "pageSpeedApiKey": null,
+    "pageSpeedSampleSize": 10
+  },
+  "createdAt": 1777460066844,
+  "completedAt": 1777460076369,
+  "status": "complete",
+  "stats": {
+    "pagesCrawled": 1,
+    "pagesDiscovered": 1,
+    "issuesFound": 30,
+    "severity": {
+      "critical": 1,
+      "warning": 10,
+      "info": 19
+    },
+    "avgResponseTimeMs": 45,
+    "totalTimeMs": 9525,
+    "pagesPerMinute": 1
+  },
+  "scores": {
+    "overall": 96,
+    "perModule": {
+      "Crawlability": {
+        "score": 80.5,
+        "issueCount": 3,
+        "severityCounts": {
+          "critical": 1,
+          "warning": 1,
+          "info": 1
+        }
+      },
+      "Duplicates": {
+        "score": 88,
+        "issueCount": 3,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 3,
+          "info": 0
+        }
+      },
+      "Meta": {
+        "score": 84.5,
+        "issueCount": 10,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 3,
+          "info": 7
+        }
+      },
+      "URL": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "HTTP": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Speed": {
+        "score": 95.5,
+        "issueCount": 2,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 1,
+          "info": 1
+        }
+      },
+      "Mobile": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Security": {
+        "score": 93.5,
+        "issueCount": 6,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 1,
+          "info": 5
+        }
+      },
+      "Schema": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Linking": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Images": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "JS-SEO": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "International": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Architecture": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Content": {
+        "score": 96,
+        "issueCount": 1,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 1,
+          "info": 0
+        }
+      },
+      "External": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Accessibility": {
+        "score": 97.5,
+        "issueCount": 5,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 5
+        }
+      }
+    },
+    "perPage": {
+      "https://example.com/": {
+        "score": 62.5,
+        "issueCount": 26,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 7,
+          "info": 19
+        }
+      }
+    }
+  },
+  "topIssues": [
+    {
+      "module": "Crawlability",
+      "checkName": "Sitemap fetch failed",
+      "severity": "critical",
+      "affectedUrl": "https://example.com/sitemap.xml",
+      "description": "Could not fetch sitemap: status 404",
+      "recommendation": "Ensure the sitemap returns a 200 with valid XML.",
+      "value": 404
+    },
+    {
+      "module": "Crawlability",
+      "checkName": "robots.txt missing",
+      "severity": "warning",
+      "affectedUrl": null,
+      "description": "No robots.txt found at /robots.txt.",
+      "recommendation": "Add a robots.txt with explicit allow rules and a Sitemap: declaration.",
+      "value": null
+    },
+    {
+      "module": "Duplicates",
+      "checkName": "URL variant returns 200 without redirect",
+      "severity": "warning",
+      "affectedUrl": "https://www.example.com/",
+      "description": "https://www.example.com/ returns 200 — should 301 to the canonical host/scheme.",
+      "recommendation": "Configure server to 301 the alternate host or scheme to the canonical one.",
+      "value": 200
+    },
+    {
+      "module": "Duplicates",
+      "checkName": "URL variant returns 200 without redirect",
+      "severity": "warning",
+      "affectedUrl": "http://example.com/",
+      "description": "http://example.com/ returns 200 — should 301 to the canonical host/scheme.",
+      "recommendation": "Configure server to 301 the alternate host or scheme to the canonical one.",
+      "value": 200
+    },
+    {
+      "module": "Duplicates",
+      "checkName": "Missing canonical",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "No <link rel=\"canonical\"> on this page.",
+      "recommendation": "Add a self-referencing canonical to consolidate signals.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Title too short",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "Title is 14 chars.",
+      "recommendation": "Aim for 30–60 chars to make titles informative.",
+      "value": "Example Domain"
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing meta description",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "No meta description.",
+      "recommendation": "Write a 70–160 char description summarising the page.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing charset",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "No charset declaration.",
+      "recommendation": "Add <meta charset=\"UTF-8\"> as the first child of <head>.",
+      "value": null
+    },
+    {
+      "module": "Speed",
+      "checkName": "No content compression",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "Response not compressed (Content-Encoding: \"none\")",
+      "recommendation": "Enable gzip or brotli on the origin/CDN.",
+      "value": ""
+    },
+    {
+      "module": "Security",
+      "checkName": "Missing HSTS header",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "No Strict-Transport-Security header on HTTPS response.",
+      "recommendation": "Add HSTS, e.g. \"Strict-Transport-Security: max-age=31536000; includeSubDomains\".",
+      "value": null
+    }
+  ],
+  "results": [
+    {
+      "module": "Crawlability",
+      "checkName": "robots.txt missing",
+      "severity": "warning",
+      "affectedUrl": null,
+      "description": "No robots.txt found at /robots.txt.",
+      "recommendation": "Add a robots.txt with explicit allow rules and a Sitemap: declaration.",
+      "value": null
+    },
+    {
+      "module": "Crawlability",
+      "checkName": "Sitemap fetch failed",
+      "severity": "critical",
+      "affectedUrl": "https://example.com/sitemap.xml",
+      "description": "Could not fetch sitemap: status 404",
+      "recommendation": "Ensure the sitemap returns a 200 with valid XML.",
+      "value": 404
+    },
+    {
+      "module": "Crawlability",
+      "checkName": "Important page missing from sitemap",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Page is reachable and shallow but not in any sitemap.",
+      "recommendation": "Include important pages in the XML sitemap.",
+      "value": null
+    },
+    {
+      "module": "Duplicates",
+      "checkName": "URL variant returns 200 without redirect",
+      "severity": "warning",
+      "affectedUrl": "https://www.example.com/",
+      "description": "https://www.example.com/ returns 200 — should 301 to the canonical host/scheme.",
+      "recommendation": "Configure server to 301 the alternate host or scheme to the canonical one.",
+      "value": 200
+    },
+    {
+      "module": "Duplicates",
+      "checkName": "URL variant returns 200 without redirect",
+      "severity": "warning",
+      "affectedUrl": "http://example.com/",
+      "description": "http://example.com/ returns 200 — should 301 to the canonical host/scheme.",
+      "recommendation": "Configure server to 301 the alternate host or scheme to the canonical one.",
+      "value": 200
+    },
+    {
+      "module": "Duplicates",
+      "checkName": "Missing canonical",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "No <link rel=\"canonical\"> on this page.",
+      "recommendation": "Add a self-referencing canonical to consolidate signals.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Title too short",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "Title is 14 chars.",
+      "recommendation": "Aim for 30–60 chars to make titles informative.",
+      "value": "Example Domain"
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing meta description",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "No meta description.",
+      "recommendation": "Write a 70–160 char description summarising the page.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing og:title",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Open Graph tag og:title is missing.",
+      "recommendation": "Add <meta property=\"og:title\" content=\"...\"> for richer social sharing.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing og:description",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Open Graph tag og:description is missing.",
+      "recommendation": "Add <meta property=\"og:description\" content=\"...\"> for richer social sharing.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing og:image",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Open Graph tag og:image is missing.",
+      "recommendation": "Add <meta property=\"og:image\" content=\"...\"> for richer social sharing.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing og:url",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Open Graph tag og:url is missing.",
+      "recommendation": "Add <meta property=\"og:url\" content=\"...\"> for richer social sharing.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing twitter:card",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Twitter Card tag twitter:card is missing.",
+      "recommendation": "Add <meta name=\"twitter:card\" content=\"...\"> for Twitter previews.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing twitter:image",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Twitter Card tag twitter:image is missing.",
+      "recommendation": "Add <meta name=\"twitter:image\" content=\"...\"> for Twitter previews.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing charset",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "No charset declaration.",
+      "recommendation": "Add <meta charset=\"UTF-8\"> as the first child of <head>.",
+      "value": null
+    },
+    {
+      "module": "Meta",
+      "checkName": "Missing favicon",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "No <link rel=\"icon\">.",
+      "recommendation": "Declare a favicon for browser tabs and bookmarks.",
+      "value": null
+    },
+    {
+      "module": "Speed",
+      "checkName": "No content compression",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "Response not compressed (Content-Encoding: \"none\")",
+      "recommendation": "Enable gzip or brotli on the origin/CDN.",
+      "value": ""
+    },
+    {
+      "module": "Speed",
+      "checkName": "Missing Cache-Control header",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "No Cache-Control header on response.",
+      "recommendation": "Set a Cache-Control header for HTML and static assets.",
+      "value": null
+    },
+    {
+      "module": "Security",
+      "checkName": "Missing HSTS header",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "No Strict-Transport-Security header on HTTPS response.",
+      "recommendation": "Add HSTS, e.g. \"Strict-Transport-Security: max-age=31536000; includeSubDomains\".",
+      "value": null
+    },
+    {
+      "module": "Security",
+      "checkName": "Missing x-content-type-options",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Response is missing x-content-type-options header.",
+      "recommendation": "Add \"X-Content-Type-Options: nosniff\".",
+      "value": null
+    },
+    {
+      "module": "Security",
+      "checkName": "Missing x-frame-options",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Response is missing x-frame-options header.",
+      "recommendation": "Add \"X-Frame-Options: SAMEORIGIN\" or use CSP frame-ancestors.",
+      "value": null
+    },
+    {
+      "module": "Security",
+      "checkName": "Missing content-security-policy",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Response is missing content-security-policy header.",
+      "recommendation": "Define a Content-Security-Policy to mitigate XSS.",
+      "value": null
+    },
+    {
+      "module": "Security",
+      "checkName": "Missing referrer-policy",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Response is missing referrer-policy header.",
+      "recommendation": "Add a Referrer-Policy (e.g. \"strict-origin-when-cross-origin\").",
+      "value": null
+    },
+    {
+      "module": "Security",
+      "checkName": "Missing permissions-policy",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "Response is missing permissions-policy header.",
+      "recommendation": "Set a Permissions-Policy to restrict powerful browser features.",
+      "value": null
+    },
+    {
+      "module": "Content",
+      "checkName": "Thin content",
+      "severity": "warning",
+      "affectedUrl": "https://example.com/",
+      "description": "Visible text is only 17 words.",
+      "recommendation": "Expand the page with substantive content (300+ words minimum for content pages).",
+      "value": 17
+    },
+    {
+      "module": "Accessibility",
+      "checkName": "Missing <main> landmark",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "No <main> element or matching ARIA role.",
+      "recommendation": "Add <main> for clearer document structure.",
+      "value": null
+    },
+    {
+      "module": "Accessibility",
+      "checkName": "Missing <nav> landmark",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "No <nav> element or matching ARIA role.",
+      "recommendation": "Add <nav> for clearer document structure.",
+      "value": null
+    },
+    {
+      "module": "Accessibility",
+      "checkName": "Missing <header> landmark",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "No <header> element or matching ARIA role.",
+      "recommendation": "Add <header> for clearer document structure.",
+      "value": null
+    },
+    {
+      "module": "Accessibility",
+      "checkName": "Missing <footer> landmark",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "No <footer> element or matching ARIA role.",
+      "recommendation": "Add <footer> for clearer document structure.",
+      "value": null
+    },
+    {
+      "module": "Accessibility",
+      "checkName": "Missing skip-navigation link",
+      "severity": "info",
+      "affectedUrl": "https://example.com/",
+      "description": "No \"skip to content\" link near the top of the page.",
+      "recommendation": "Add a skip-nav link as the first focusable element.",
+      "value": null
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://example.com/",
+      "finalUrl": "https://example.com/",
+      "depth": 0,
+      "fromUrl": null,
+      "status": 200,
+      "responseTimeMs": 45,
+      "redirectChain": [],
+      "inboundCount": 0,
+      "outboundCount": 0,
+      "rank": 1,
+      "internalLinks": [],
+      "externalLinks": [
+        {
+          "href": "https://iana.org/domains/example",
+          "text": "Learn more",
+          "rel": "",
+          "target": ""
+        }
+      ],
+      "images": [],
+      "consoleErrors": [],
+      "headers": {
+        "date": "Wed, 29 Apr 2026 10:54:28 GMT",
+        "content-type": "text/html",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "server": "cloudflare",
+        "last-modified": "Sat, 18 Apr 2026 00:51:00 GMT",
+        "allow": "GET, HEAD",
+        "age": "7289",
+        "cf-cache-status": "HIT",
+        "cf-ray": "9f3dc4d63cb25543-BOM"
+      },
+      "wordCount": 17,
+      "schemaTypes": [],
+      "schemaBlocks": 0,
+      "hreflang": [],
+      "title": "Example Domain",
+      "score": 62.5,
+      "issueCount": 25,
+      "issues": [
+        {
+          "module": "Duplicates",
+          "checkName": "Missing canonical",
+          "severity": "warning",
+          "affectedUrl": "https://example.com/",
+          "description": "No <link rel=\"canonical\"> on this page.",
+          "recommendation": "Add a self-referencing canonical to consolidate signals.",
+          "value": null
+        },
+        {
+          "module": "Meta",
+          "checkName": "Title too short",
+          "severity": "warning",
+          "affectedUrl": "https://example.com/",
+          "description": "Title is 14 chars.",
+          "recommendation": "Aim for 30–60 chars to make titles informative.",
+          "value": "Example Domain"
+        },
+        {
+          "module": "Meta",
+          "checkName": "Missing meta description",
+          "severity": "warning",
+          "affectedUrl": "https://example.com/",
+          "description": "No meta description.",
+          "recommendation": "Write a 70–160 char description summarising the page.",
+          "value": null
+        },
+        {
+          "module": "Meta",
+          "checkName": "Missing og:title",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Open Graph tag og:title is missing.",
+          "recommendation": "Add <meta property=\"og:title\" content=\"...\"> for richer social sharing.",
+          "value": null
+        },
+        {
+          "module": "Meta",
+          "checkName": "Missing og:description",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Open Graph tag og:description is missing.",
+          "recommendation": "Add <meta property=\"og:description\" content=\"...\"> for richer social sharing.",
+          "value": null
+        },
+        {
+          "module": "Meta",
+          "checkName": "Missing og:image",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Open Graph tag og:image is missing.",
+          "recommendation": "Add <meta property=\"og:image\" content=\"...\"> for richer social sharing.",
+          "value": null
+        },
+        {
+          "module": "Meta",
+          "checkName": "Missing og:url",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Open Graph tag og:url is missing.",
+          "recommendation": "Add <meta property=\"og:url\" content=\"...\"> for richer social sharing.",
+          "value": null
+        },
+        {
+          "module": "Meta",
+          "checkName": "Missing twitter:card",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Twitter Card tag twitter:card is missing.",
+          "recommendation": "Add <meta name=\"twitter:card\" content=\"...\"> for Twitter previews.",
+          "value": null
+        },
+        {
+          "module": "Meta",
+          "checkName": "Missing twitter:image",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Twitter Card tag twitter:image is missing.",
+          "recommendation": "Add <meta name=\"twitter:image\" content=\"...\"> for Twitter previews.",
+          "value": null
+        },
+        {
+          "module": "Meta",
+          "checkName": "Missing charset",
+          "severity": "warning",
+          "affectedUrl": "https://example.com/",
+          "description": "No charset declaration.",
+          "recommendation": "Add <meta charset=\"UTF-8\"> as the first child of <head>.",
+          "value": null
+        },
+        {
+          "module": "Meta",
+          "checkName": "Missing favicon",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "No <link rel=\"icon\">.",
+          "recommendation": "Declare a favicon for browser tabs and bookmarks.",
+          "value": null
+        },
+        {
+          "module": "Speed",
+          "checkName": "No content compression",
+          "severity": "warning",
+          "affectedUrl": "https://example.com/",
+          "description": "Response not compressed (Content-Encoding: \"none\")",
+          "recommendation": "Enable gzip or brotli on the origin/CDN.",
+          "value": ""
+        },
+        {
+          "module": "Speed",
+          "checkName": "Missing Cache-Control header",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "No Cache-Control header on response.",
+          "recommendation": "Set a Cache-Control header for HTML and static assets.",
+          "value": null
+        },
+        {
+          "module": "Security",
+          "checkName": "Missing HSTS header",
+          "severity": "warning",
+          "affectedUrl": "https://example.com/",
+          "description": "No Strict-Transport-Security header on HTTPS response.",
+          "recommendation": "Add HSTS, e.g. \"Strict-Transport-Security: max-age=31536000; includeSubDomains\".",
+          "value": null
+        },
+        {
+          "module": "Security",
+          "checkName": "Missing x-content-type-options",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Response is missing x-content-type-options header.",
+          "recommendation": "Add \"X-Content-Type-Options: nosniff\".",
+          "value": null
+        },
+        {
+          "module": "Security",
+          "checkName": "Missing x-frame-options",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Response is missing x-frame-options header.",
+          "recommendation": "Add \"X-Frame-Options: SAMEORIGIN\" or use CSP frame-ancestors.",
+          "value": null
+        },
+        {
+          "module": "Security",
+          "checkName": "Missing content-security-policy",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Response is missing content-security-policy header.",
+          "recommendation": "Define a Content-Security-Policy to mitigate XSS.",
+          "value": null
+        },
+        {
+          "module": "Security",
+          "checkName": "Missing referrer-policy",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Response is missing referrer-policy header.",
+          "recommendation": "Add a Referrer-Policy (e.g. \"strict-origin-when-cross-origin\").",
+          "value": null
+        },
+        {
+          "module": "Security",
+          "checkName": "Missing permissions-policy",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "Response is missing permissions-policy header.",
+          "recommendation": "Set a Permissions-Policy to restrict powerful browser features.",
+          "value": null
+        },
+        {
+          "module": "Content",
+          "checkName": "Thin content",
+          "severity": "warning",
+          "affectedUrl": "https://example.com/",
+          "description": "Visible text is only 17 words.",
+          "recommendation": "Expand the page with substantive content (300+ words minimum for content pages).",
+          "value": 17
+        },
+        {
+          "module": "Accessibility",
+          "checkName": "Missing <main> landmark",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "No <main> element or matching ARIA role.",
+          "recommendation": "Add <main> for clearer document structure.",
+          "value": null
+        },
+        {
+          "module": "Accessibility",
+          "checkName": "Missing <nav> landmark",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "No <nav> element or matching ARIA role.",
+          "recommendation": "Add <nav> for clearer document structure.",
+          "value": null
+        },
+        {
+          "module": "Accessibility",
+          "checkName": "Missing <header> landmark",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "No <header> element or matching ARIA role.",
+          "recommendation": "Add <header> for clearer document structure.",
+          "value": null
+        },
+        {
+          "module": "Accessibility",
+          "checkName": "Missing <footer> landmark",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "No <footer> element or matching ARIA role.",
+          "recommendation": "Add <footer> for clearer document structure.",
+          "value": null
+        },
+        {
+          "module": "Accessibility",
+          "checkName": "Missing skip-navigation link",
+          "severity": "info",
+          "affectedUrl": "https://example.com/",
+          "description": "No \"skip to content\" link near the top of the page.",
+          "recommendation": "Add a skip-nav link as the first focusable element.",
+          "value": null
+        }
+      ]
+    }
+  ],
+  "robots": {
+    "exists": false,
+    "status": 404,
+    "raw": "",
+    "rules": {},
+    "sitemaps": [],
+    "errors": []
+  },
+  "sitemap": {
+    "sitemaps": [
+      {
+        "url": "https://example.com/sitemap.xml",
+        "ok": false,
+        "status": 404,
+        "urls": [],
+        "indexes": [],
+        "error": "status 404"
+      }
+    ],
+    "allUrls": []
+  },
+  "tls": {
+    "protocol": "TLSv1.3",
+    "valid": true,
+    "validFrom": "Apr  2 21:18:57 2026 GMT",
+    "validTo": "Jul  1 21:24:46 2026 GMT",
+    "subject": {
+      "CN": "example.com"
+    },
+    "issuer": {
+      "C": "US",
+      "O": "CLOUDFLARE, INC.",
+      "CN": "Cloudflare TLS Issuing ECC CA 1"
+    }
+  },
+  "architecture": {
+    "avgDepth": 0,
+    "hubs": [
+      [
+        "https://example.com/",
+        0
+      ]
+    ],
+    "authorities": []
+  },
+  "externalLinkStatuses": {
+    "https://iana.org/domains/example": {
+      "status": 200
+    }
+  },
+  "speedReports": {},
+  "linkGraph": {
+    "nodes": [
+      {
+        "id": "https://example.com/",
+        "depth": 0,
+        "status": 200,
+        "inbound": 0,
+        "outbound": 0,
+        "rank": 1
+      }
+    ],
+    "links": []
+  }
+}

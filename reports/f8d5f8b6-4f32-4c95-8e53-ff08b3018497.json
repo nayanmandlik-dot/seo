@@ -1,0 +1,306 @@
+{
+  "sessionId": "f8d5f8b6-4f32-4c95-8e53-ff08b3018497",
+  "rootUrl": "https://innovitnewdev.wpenginepowered.com/#",
+  "config": {
+    "sessionId": "f8d5f8b6-4f32-4c95-8e53-ff08b3018497",
+    "rootUrl": "https://innovitnewdev.wpenginepowered.com/#",
+    "maxPages": null,
+    "crawlSpeed": "normal",
+    "includePatterns": [],
+    "excludePatterns": [],
+    "userAgent": "chrome",
+    "crawlSubdomains": false,
+    "respectRobots": true,
+    "maxDepth": null,
+    "pageSpeedApiKey": null,
+    "pageSpeedSampleSize": 10
+  },
+  "createdAt": 1778142815948,
+  "completedAt": 1778142823804,
+  "status": "complete",
+  "stats": {
+    "pagesCrawled": 0,
+    "pagesDiscovered": 0,
+    "issuesFound": 3,
+    "severity": {
+      "critical": 2,
+      "warning": 0,
+      "info": 1
+    },
+    "avgResponseTimeMs": 0,
+    "totalTimeMs": 7856,
+    "pagesPerMinute": 0
+  },
+  "scores": {
+    "overall": 98,
+    "perModule": {
+      "Crawlability": {
+        "score": 69.5,
+        "issueCount": 3,
+        "severityCounts": {
+          "critical": 2,
+          "warning": 0,
+          "info": 1
+        }
+      },
+      "Duplicates": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Meta": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "URL": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "HTTP": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Speed": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Mobile": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Security": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Schema": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Linking": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Images": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "JS-SEO": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "International": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Architecture": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Content": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "External": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      },
+      "Accessibility": {
+        "score": 100,
+        "issueCount": 0,
+        "severityCounts": {
+          "critical": 0,
+          "warning": 0,
+          "info": 0
+        }
+      }
+    },
+    "perPage": {}
+  },
+  "topIssues": [
+    {
+      "module": "Crawlability",
+      "checkName": "robots.txt blocks entire site",
+      "severity": "critical",
+      "affectedUrl": null,
+      "description": "User-agent \"*\" has \"Disallow: /\" — blocks all URLs.",
+      "recommendation": "Remove \"Disallow: /\" unless the entire site is intentionally hidden from search.",
+      "value": "*"
+    },
+    {
+      "module": "Crawlability",
+      "checkName": "Sitemap fetch failed",
+      "severity": "critical",
+      "affectedUrl": "https://innovitnewdev.wpenginepowered.com/sitemap.xml",
+      "description": "Could not fetch sitemap: status 404",
+      "recommendation": "Ensure the sitemap returns a 200 with valid XML.",
+      "value": 404
+    },
+    {
+      "module": "Crawlability",
+      "checkName": "robots.txt missing Sitemap declaration",
+      "severity": "info",
+      "affectedUrl": null,
+      "description": "No \"Sitemap:\" line in robots.txt.",
+      "recommendation": "Add a \"Sitemap: https://your-site/sitemap.xml\" line so crawlers can discover the sitemap.",
+      "value": null
+    }
+  ],
+  "results": [
+    {
+      "module": "Crawlability",
+      "checkName": "robots.txt blocks entire site",
+      "severity": "critical",
+      "affectedUrl": null,
+      "description": "User-agent \"*\" has \"Disallow: /\" — blocks all URLs.",
+      "recommendation": "Remove \"Disallow: /\" unless the entire site is intentionally hidden from search.",
+      "value": "*"
+    },
+    {
+      "module": "Crawlability",
+      "checkName": "robots.txt missing Sitemap declaration",
+      "severity": "info",
+      "affectedUrl": null,
+      "description": "No \"Sitemap:\" line in robots.txt.",
+      "recommendation": "Add a \"Sitemap: https://your-site/sitemap.xml\" line so crawlers can discover the sitemap.",
+      "value": null
+    },
+    {
+      "module": "Crawlability",
+      "checkName": "Sitemap fetch failed",
+      "severity": "critical",
+      "affectedUrl": "https://innovitnewdev.wpenginepowered.com/sitemap.xml",
+      "description": "Could not fetch sitemap: status 404",
+      "recommendation": "Ensure the sitemap returns a 200 with valid XML.",
+      "value": 404
+    }
+  ],
+  "pages": [],
+  "robots": {
+    "exists": true,
+    "status": 200,
+    "raw": "User-agent: *\nDisallow: /\n",
+    "rules": {
+      "*": {
+        "allow": [],
+        "disallow": [
+          "/"
+        ],
+        "crawlDelay": null
+      }
+    },
+    "sitemaps": [],
+    "errors": []
+  },
+  "sitemap": {
+    "sitemaps": [
+      {
+        "url": "https://innovitnewdev.wpenginepowered.com/sitemap.xml",
+        "ok": false,
+        "status": 404,
+        "urls": [],
+        "indexes": [],
+        "error": "status 404"
+      }
+    ],
+    "allUrls": []
+  },
+  "tls": {
+    "protocol": "TLSv1.3",
+    "valid": true,
+    "validFrom": "May  1 07:59:24 2026 GMT",
+    "validTo": "Jul 30 07:59:23 2026 GMT",
+    "subject": {
+      "CN": "wpenginepowered.com"
+    },
+    "issuer": {
+      "C": "US",
+      "O": "Let's Encrypt",
+      "CN": "E8"
+    }
+  },
+  "architecture": {
+    "avgDepth": 0,
+    "hubs": [],
+    "authorities": []
+  },
+  "externalLinkStatuses": {},
+  "speedReports": {},
+  "linkGraph": {
+    "nodes": [],
+    "links": []
+  }
+}
