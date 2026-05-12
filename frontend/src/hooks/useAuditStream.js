@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { API_BASE } from '../api.js';
 
 // Subscribes to Server-Sent Events and aggregates progress / log / status / complete events.
 export function useAuditStream(sessionId) {
@@ -13,7 +14,7 @@ export function useAuditStream(sessionId) {
 
   useEffect(() => {
     if (!sessionId) return;
-    const es = new EventSource(`/api/events/${sessionId}`);
+    const es = new EventSource(`${API_BASE}/events/${sessionId}`);
     ref.current = es;
 
     es.addEventListener('progress', (e) => {

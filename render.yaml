@@ -1,0 +1,43 @@
+# Render Blueprint — deploys the backend as a Web Service.
+# Connect this repo to Render via https://dashboard.render.com/blueprints and
+# Render will read this file to provision the service.
+#
+# Notes:
+# - Playwright + Puppeteer both need a Chromium binary. The build command
+#   installs Playwright's bundled Chromium with system deps.
+# - Render's free plan has 512MB RAM and no persistent disk. Reports/exports
+#   are written to /tmp and lost on restart (acceptable for an MVP demo).
+# - Add PAGESPEED_API_KEY (and SAFE_BROWSING_API_KEY if used) in the Render
+#   dashboard after the service is created — they are marked sync:false so
+#   the blueprint does not require them.
+
+services:
+  - type: web
+    name: seo-audit-backend
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: npm install && npx playwright install --with-deps chromium
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DISABLE_REDIS
+        value: "1"
+      - key: REPORTS_DIR
+        value: /tmp/reports
+      - key: EXPORTS_DIR
+        value: /tmp/exports
+      - key: PUPPETEER_CACHE_DIR
+        value: /opt/render/.cache/puppeteer
+      - key: PAGESPEED_API_KEY
+        sync: false
+      - key: SAFE_BROWSING_API_KEY
+        sync: false
