@@ -64,26 +64,55 @@ export async function startAudit(options) {
         emit(sessionId, 'log', { ts: Date.now(), msg: `Warning: site exceeds 500 pages (${pages.size}); continuing.` });
       }
 
+      // Save a checkpoint after the crawl so a backend restart during analyzing
+      // leaves *something* visible to the user instead of "report not found".
+      saveReport(sessionId, {
+        sessionId, rootUrl: options.rootUrl, status: 'analyzing',
+        createdAt: startedAt,
+        stats: { pagesCrawled: pages.size, pagesDiscovered: pages.size },
+      });
+
       // 4. analyzers
       emit(sessionId, 'status', { status: 'analyzing' });
+
+      // Wrap each analyzer call so one failure doesn't kill the whole audit.
+      // Emits a log event so users see exactly which phase is running.
+      const safe = async (name, fn) => {
+        emit(sessionId, 'log', { ts: Date.now(), msg: `Analyzing: ${name}` });
+        try {
+          const t0 = Date.now();
+          const result = await fn();
+          const elapsed = Date.now() - t0;
+          if (elapsed > 5000) {
+            emit(sessionId, 'log', { ts: Date.now(), msg: `  ${name} took ${(elapsed / 1000).toFixed(1)}s` });
+          }
+          return result ?? [];
+        } catch (e) {
+          console.error(`[audit][${sessionId}] analyzer ${name} failed:`, e);
+          emit(sessionId, 'log', { ts: Date.now(), msg: `  WARN ${name} failed: ${e.message}` });
+          return [];
+        }
+      };
+
       const allResults = [];
       const pageIssueIndex = new Map(); // url -> [issues]
 
-      // Site-wide analyzers
-      allResults.push(...crawlability.analyzeRobots(robots));
-      allResults.push(...await crawlability.analyzeSitemaps(sitemapResult, pages, robots));
-      allResults.push(...crawlability.analyzeCrawlTraps(pages));
-      allResults.push(...crawlability.analyzeCrawlDepth(pages));
-      allResults.push(...duplicates.analyzeDuplicateMeta(pages));
-      allResults.push(...duplicates.analyzeNearDuplicates(pages));
-      allResults.push(...duplicates.analyzeUrlVariants(pages));
-      allResults.push(...await duplicates.analyzeHostVariants(options.rootUrl));
-      allResults.push(...analyzeCannibalization(pages));
-      allResults.push(...analyzeTemplated(pages));
-      allResults.push(...analyzeHreflangBidirectional(pages));
+      // Site-wide analyzers (each wrapped so failures degrade gracefully)
+      allResults.push(...await safe('robots',           () => crawlability.analyzeRobots(robots)));
+      allResults.push(...await safe('sitemaps',         () => crawlability.analyzeSitemaps(sitemapResult, pages, robots)));
+      allResults.push(...await safe('crawl traps',      () => crawlability.analyzeCrawlTraps(pages)));
+      allResults.push(...await safe('crawl depth',      () => crawlability.analyzeCrawlDepth(pages)));
+      allResults.push(...await safe('duplicate meta',   () => duplicates.analyzeDuplicateMeta(pages)));
+      allResults.push(...await safe('near duplicates',  () => duplicates.analyzeNearDuplicates(pages)));
+      allResults.push(...await safe('URL variants',     () => duplicates.analyzeUrlVariants(pages)));
+      allResults.push(...await safe('host variants',    () => duplicates.analyzeHostVariants(options.rootUrl)));
+      allResults.push(...await safe('cannibalization',  () => analyzeCannibalization(pages)));
+      allResults.push(...await safe('templated',        () => analyzeTemplated(pages)));
+      allResults.push(...await safe('hreflang sitewide',() => analyzeHreflangBidirectional(pages)));
 
-      const tlsRes = await analyzeTls(options.rootUrl);
-      allResults.push(...tlsRes.issues);
+      const tlsRaw = await safe('TLS', () => analyzeTls(options.rootUrl));
+      const tlsRes = Array.isArray(tlsRaw) ? { issues: [], tlsInfo: null } : tlsRaw;
+      allResults.push(...(tlsRes.issues || []));
 
       // Per-page analyzers
       const pageMeta = {}; // url -> { wordCount, schemaTypes, ... }
@@ -139,23 +168,39 @@ export async function startAudit(options) {
       const extRes = await analyzeExternalLinks(pages);
       allResults.push(...extRes.issues);
 
-      // Page Speed (PSI) — only if API key configured
+      // Page Speed (PSI) — only if API key configured.
+      // Run in parallel batches: serial took ~30s per page × N pages, which
+      // exceeded Render free-tier wall-clock + memory limits.
       const apiKey = options.pageSpeedApiKey || process.env.PAGESPEED_API_KEY;
       const speedReports = {};
       if (apiKey) {
-        const top = [...pages.keys()].slice(0, options.pageSpeedSampleSize || 10);
-        emit(sessionId, 'log', { ts: Date.now(), msg: `Running PageSpeed Insights on ${top.length} pages` });
-        for (const url of top) {
-          const r = await analyzeSpeed(url, apiKey);
-          allResults.push(...r.issues);
-          speedReports[url] = r.speedReport;
+        const sampleSize = options.pageSpeedSampleSize || 5; // was 10 — too slow on free tier
+        const top = [...pages.keys()].slice(0, sampleSize);
+        emit(sessionId, 'log', { ts: Date.now(), msg: `Running PageSpeed Insights on ${top.length} pages (parallel, 3 at a time)` });
+        const PSI_CONCURRENCY = 3;
+        let done = 0;
+        for (let i = 0; i < top.length; i += PSI_CONCURRENCY) {
+          const batch = top.slice(i, i + PSI_CONCURRENCY);
+          const results = await Promise.all(batch.map(url =>
+            analyzeSpeed(url, apiKey).catch(e => {
+              console.error(`[audit][${sessionId}] PSI failed for ${url}:`, e.message);
+              return { issues: [], speedReport: null };
+            })
+          ));
+          batch.forEach((url, j) => {
+            const r = results[j];
+            if (r?.issues) allResults.push(...r.issues);
+            speedReports[url] = r?.speedReport ?? null;
+            done++;
+          });
+          emit(sessionId, 'log', { ts: Date.now(), msg: `  PSI progress: ${done}/${top.length}` });
         }
       } else {
         emit(sessionId, 'log', { ts: Date.now(), msg: 'No PAGESPEED_API_KEY; skipping CWV checks' });
       }
 
       // Googlebot probe (homepage only)
-      allResults.push(...await probeGooglebot(options.rootUrl));
+      allResults.push(...await safe('Googlebot probe', () => probeGooglebot(options.rootUrl)));
 
       // 5. scores
       const scores = computeScores(allResults, pages);
