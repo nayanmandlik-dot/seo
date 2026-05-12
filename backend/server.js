@@ -37,8 +37,24 @@ app.use('/api', routes);
 process.on('unhandledRejection', (e) => console.warn('[unhandledRejection]', e?.message || e));
 process.on('uncaughtException', (e) => console.warn('[uncaughtException]', e?.message || e));
 
+// JSON error handler — unhandled route errors return JSON, not HTML stack traces
+// (the frontend always parses res.json() and HTML would crash the parser).
+app.use((err, _req, res, _next) => {
+  console.error('[express error]', err);
+  res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
+});
+
 await initQueue('seo-audit');
-console.log(`[seo-audit] queue mode: ${getMode()}`);
+
+// Startup summary — appears in Render logs at boot so misconfigurations
+// (wrong reports dir, missing API key, etc) are obvious without reproducing.
+console.log('[seo-audit] startup config:');
+console.log(`  NODE_ENV:       ${process.env.NODE_ENV || 'development'}`);
+console.log(`  queue mode:     ${getMode()}`);
+console.log(`  reports dir:    ${reportsDir}`);
+console.log(`  exports dir:    ${exportsDir}`);
+console.log(`  pagespeed key:  ${process.env.PAGESPEED_API_KEY ? 'set' : 'NOT SET (Page Speed module will fail)'}`);
+console.log(`  playwright dir: ${process.env.PLAYWRIGHT_BROWSERS_PATH || '(default ~/.cache/ms-playwright)'}`);
 
 app.listen(PORT, HOST, () => {
   console.log(`[seo-audit] backend listening on http://${HOST}:${PORT}`);

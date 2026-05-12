@@ -8,6 +8,7 @@ export default function Home() {
   const [url, setUrl] = useState('');
   const [showSettings, setShowSettings] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(null);
   const [config, setConfig] = useState({
     maxPages: '',
     crawlSpeed: 'normal',
@@ -25,6 +26,7 @@ export default function Home() {
   async function start() {
     if (!url.trim()) return;
     setBusy(true);
+    setError(null);
     try {
       const body = {
         rootUrl: url.trim(),
@@ -41,7 +43,7 @@ export default function Home() {
       const { sessionId } = await api.startAudit(body);
       nav(`/audit/${sessionId}`);
     } catch (e) {
-      alert('Failed to start audit: ' + e.message);
+      setError(e.message);
     } finally { setBusy(false); }
   }
 
@@ -67,6 +69,11 @@ export default function Home() {
             {busy ? 'Starting…' : 'Start Audit'}
           </button>
         </div>
+        {error && (
+          <div className="mt-3 p-3 bg-red-50 border border-red-200 text-red-800 rounded text-sm">
+            Failed to start audit: {error}
+          </div>
+        )}
         {showSettings && (
           <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
             <label className="block">
