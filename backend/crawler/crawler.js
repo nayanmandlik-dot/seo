@@ -102,7 +102,17 @@ export class Crawler {
 
   async run(onPage) {
     this.startedAt = Date.now();
-    this.browser = await chromium.launch({ headless: true });
+    // Production-safe launch flags: --no-sandbox is required on Render
+    // (and most container hosts) where the sandbox can't be initialized;
+    // --disable-dev-shm-usage avoids OOM in 512MB containers.
+    this.browser = await chromium.launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+      ],
+    });
     try {
       this.enqueue(this.rootUrl, 0, null);
       this.pushLog(`Starting crawl of ${this.rootUrl}`);

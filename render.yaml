@@ -18,7 +18,11 @@ services:
     plan: free
     region: oregon
     rootDir: backend
-    buildCommand: npm install && npx playwright install --with-deps chromium
+    # postinstall in backend/package.json runs `playwright install chromium`
+    # automatically after npm install, so the explicit `npx playwright install`
+    # step is no longer needed here. Kept it as a safety net in case the
+    # postinstall hook is ever removed or fails.
+    buildCommand: npm install && (npx playwright install chromium || true)
     startCommand: npm start
     healthCheckPath: /api/health
     autoDeploy: true
@@ -37,6 +41,8 @@ services:
         value: /tmp/exports
       - key: PUPPETEER_CACHE_DIR
         value: /opt/render/.cache/puppeteer
+      - key: PLAYWRIGHT_BROWSERS_PATH
+        value: /opt/render/.cache/ms-playwright
       - key: PAGESPEED_API_KEY
         sync: false
       - key: SAFE_BROWSING_API_KEY

@@ -69,7 +69,14 @@ function escape(s) {
 
 export async function exportReportPdf(report, { executive = false } = {}) {
   const html = reportHtml(report, executive);
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+    ],
+  });
   try {
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: 'load' });
