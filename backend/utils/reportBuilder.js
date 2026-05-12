@@ -177,7 +177,7 @@ export async function startAudit(options) {
         const sampleSize = options.pageSpeedSampleSize || 5; // was 10 — too slow on free tier
         const top = [...pages.keys()].slice(0, sampleSize);
         emit(sessionId, 'log', { ts: Date.now(), msg: `Running PageSpeed Insights on ${top.length} pages (parallel, 3 at a time)` });
-        const PSI_CONCURRENCY = 3;
+        const PSI_CONCURRENCY = 5;
         let done = 0;
         for (let i = 0; i < top.length; i += PSI_CONCURRENCY) {
           const batch = top.slice(i, i + PSI_CONCURRENCY);

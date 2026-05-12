@@ -243,7 +243,11 @@ export class Crawler {
     let finalUrl = url;
     let pwStatus = 0;
     try {
-      const resp = await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
+      // 'load' instead of 'networkidle': many sites with analytics or persistent
+      // connections never reach networkidle and burn the full timeout. 'load'
+      // still waits for the load event (full DOM + initial resources) — enough
+      // for JS-rendered SEO content, but typically 5-10x faster.
+      const resp = await page.goto(url, { waitUntil: 'load', timeout: 30000 });
       pwStatus = resp ? resp.status() : 0;
       finalUrl = page.url();
       renderedHtml = await page.content();

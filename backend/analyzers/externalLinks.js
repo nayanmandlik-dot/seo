@@ -9,7 +9,7 @@ import { makeResult, SEV } from '../utils/result.js';
 
 const M = 'External';
 
-export async function analyzeExternalLinks(pages, concurrency = 8) {
+export async function analyzeExternalLinks(pages, concurrency = 16) {
   const out = [];
   const seen = new Map(); // href -> { status, error }
   const all = [];
