@@ -1,12 +1,48 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
+import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import routes from './api/routes.js';
 import { sseHandler } from './api/sse.js';
 import { initQueue, getMode } from './crawler/queue.js';
+
+// Belt-and-suspenders: if Chromium isn't on disk at startup (e.g. Render
+// served a build with a stale node_modules cache that predated postinstall),
+// install it now. On a healthy deploy this is a ~30ms no-op directory check;
+// on a stale-cache deploy it adds ~2 min to cold start and then audits work.
+async function ensureChromium() {
+  const cacheDir = process.env.PLAYWRIGHT_BROWSERS_PATH
+    || path.join(os.homedir(), '.cache', 'ms-playwright');
+  let hasChromium = false;
+  try {
+    const entries = fs.readdirSync(cacheDir);
+    hasChromium = entries.some((e) => e.startsWith('chromium'));
+  } catch { /* cache dir doesn't exist yet */ }
+  if (hasChromium) {
+    console.log(`[seo-audit] Chromium found at ${cacheDir}`);
+    return;
+  }
+  console.warn(`[seo-audit] Chromium MISSING at ${cacheDir} — installing (~2 min)…`);
+  await new Promise((resolve) => {
+    const proc = spawn('npx', ['playwright', 'install', 'chromium'], {
+      stdio: 'inherit',
+      shell: true,
+    });
+    proc.on('exit', (code) => {
+      if (code === 0) console.log('[seo-audit] Chromium install complete');
+      else console.error(`[seo-audit] Chromium install failed (exit ${code}) — audits will error until fixed`);
+      resolve();
+    });
+    proc.on('error', (e) => {
+      console.error('[seo-audit] Chromium install spawn error:', e.message);
+      resolve();
+    });
+  });
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,6 +80,7 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
 });
 
+await ensureChromium();
 await initQueue('seo-audit');
 
 // Startup summary — appears in Render logs at boot so misconfigurations
