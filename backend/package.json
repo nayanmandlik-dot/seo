@@ -19,7 +19,6 @@
     "json-2-csv": "^5.5.7",
     "mime-types": "^2.1.35",
     "playwright": "^1.48.0",
-    "puppeteer": "^23.5.0",
     "sax": "^1.4.1",
     "uuid": "^10.0.0",
     "xml2js": "^0.6.2"

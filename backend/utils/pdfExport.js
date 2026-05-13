@@ -1,5 +1,9 @@
-// Render report HTML and convert to PDF using Puppeteer.
-import puppeteer from 'puppeteer';
+// Render report HTML and convert to PDF using Playwright's Chromium.
+// Originally used Puppeteer, but Puppeteer needed its own ~200MB Chrome
+// install separate from Playwright's. Both libraries drive Chromium and
+// produce identical PDFs, so consolidating on Playwright halves the browser
+// install size and eliminates a class of "Chrome not found" errors on Render.
+import { chromium } from 'playwright';
 import { json2csv } from 'json-2-csv';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -69,7 +73,7 @@ function escape(s) {
 
 export async function exportReportPdf(report, { executive = false } = {}) {
   const html = reportHtml(report, executive);
-  const browser = await puppeteer.launch({
+  const browser = await chromium.launch({
     headless: true,
     args: [
       '--no-sandbox',
