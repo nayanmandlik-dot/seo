@@ -60,13 +60,34 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 
-app.get('/', (_req, res) => {
-  res.send('Backend is running successfully 🚀');
-});
-
+// API routes — mounted FIRST so they aren't shadowed by the SPA catch-all below.
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.get('/api/events/:sessionId', sseHandler);
 app.use('/api', routes);
+
+// JSON 404 for unmatched /api routes (so frontend's res.json() parsing works
+// and we don't accidentally return the SPA's index.html for missing endpoints).
+app.use('/api', (_req, res) => res.status(404).json({ error: 'API endpoint not found' }));
+
+// Serve the built frontend (Vite output) so the same Render URL serves both
+// the React UI and the API. This only kicks in if the build is present —
+// makes the backend usable standalone (e.g. local dev with `npm run dev:backend`).
+const distPath = path.resolve(__dirname, '..', 'frontend', 'dist');
+const hasFrontend = fs.existsSync(path.join(distPath, 'index.html'));
+
+if (hasFrontend) {
+  console.log(`[seo-audit] serving frontend from ${distPath}`);
+  app.use(express.static(distPath));
+  // SPA fallback — any non-/api path returns index.html so React Router takes
+  // over (deep links, page refresh, etc.).
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api/')) return next();
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+} else {
+  console.log('[seo-audit] no frontend build at', distPath, '— serving API only');
+  app.get('/', (_req, res) => res.send('Backend is running (no frontend build present)'));
+}
 
 // Don't let async errors from third-party libs (e.g. ioredis losing the connection)
 // take down the whole backend.

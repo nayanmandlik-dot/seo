@@ -17,12 +17,17 @@ services:
     runtime: node
     plan: free
     region: oregon
-    rootDir: backend
-    # postinstall in backend/package.json runs `playwright install chromium`
-    # automatically after npm install, so the explicit `npx playwright install`
-    # step is no longer needed here. Kept it as a safety net in case the
-    # postinstall hook is ever removed or fails.
-    buildCommand: npm install && (npx playwright install chromium || true)
+    # Build from the repo root so we can install both workspaces AND build the
+    # React frontend in one pass. The backend then serves frontend/dist/ via
+    # express.static, so the Render URL serves the UI directly.
+    # (rootDir intentionally NOT set — defaults to repo root.)
+    #
+    # Root package.json scripts:
+    #   "build" → npm run build -w frontend  (produces frontend/dist/)
+    #   "start" → npm run start -w backend   (runs backend/server.js)
+    # Backend's postinstall hook ("playwright install chromium") runs
+    # automatically as part of `npm install` via workspaces.
+    buildCommand: npm install && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     autoDeploy: true
